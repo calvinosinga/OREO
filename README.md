@@ -4,7 +4,9 @@ OREO stands for Occurence Rates of Exoplanets Organization, where we calculate t
 
 # Requisites
 Astropy
+
 numpy, probably
+
 matplotlib, probably
 
 # Installation
