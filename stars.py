@@ -1,5 +1,6 @@
 from table import Table
 import numpy as np
+import h5py as hp
 
 class StarTable(Table):
 
@@ -24,6 +25,23 @@ class StarTable(Table):
         }
         return kwords
 
+    ########## HDF5 IO ####################################
+    def saveData(self, savepath = 'stars.hdf5'):
+        f = hp.File(savepath, 'w')
+        data = self.getAllData()
+        for dname, dset in data.items():
+            f.create_dataset(dname, data=dset, 
+                    compression = 'gzip', compression_opts = 9)
+        f.close()
+        return
+    
+    def loadHdf5(self, loadpath = 'stars.hdf5'):
+        f = hp.File(loadpath, 'w')
+        keylist = list(f.keys())
+        for k in keylist:
+            self.data[k] = f[k][:]
+        f.close()
+        return
     ######### METHODS TO WINNOW DATA ####################
 
     def _applyLimits(self, data, limits):
@@ -47,8 +65,7 @@ class StarTable(Table):
 
 if __name__ == '__main__':
     stars = StarTable()
-    stars.loadTable('stars.tbl')
-    stars.loadTable('sup_stars.tbl')
+    stars.loadTable('supstars.tbl')
     stars.magCut()
     stars.tempCut()
     stars.loggCut()
