@@ -35,12 +35,15 @@ class StarTable(Table):
         f.close()
         return
     
-    def loadHdf5(self, loadpath = 'stars.hdf5'):
-        f = hp.File(loadpath, 'w')
-        keylist = list(f.keys())
+    def loadHdf5(self, hdf5file):
+        keylist = list(hdf5file.keys())
         for k in keylist:
-            self.data[k] = f[k][:]
-        f.close()
+            self.data[k] = hdf5file[k][:]
+                # initialize the mask, used to make cuts to data
+            self.mask = np.ones(np.max(self.data[k].shape), 
+                    dtype = bool)
+            self.count = np.max(self.data[k].shape)
+        hdf5file.close()
         return
     ######### METHODS TO WINNOW DATA ####################
 
