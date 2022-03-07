@@ -76,7 +76,8 @@ class CandidateTable(PlanetTable):
             'koi_steff' : 'temperature',
             'koi_srad' : 'star_radius',
             'koi_model_snr' : 'snr',
-            'koi_kepmag' : 'mag'
+            'koi_kepmag' : 'mag',
+            'koi_smet' : 'metallicity'
         }
         return kwords
     
